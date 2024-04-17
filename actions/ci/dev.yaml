@@ -1,0 +1,22 @@
+name: dev build
+on:
+  # Scan changed files in PRs (diff-aware scanning):
+  pull_request: {}
+jobs:
+  scan:
+    if: github.actor!= 'dependabot-preview[bot]'
+    name: scan
+    runs-on:
+      group: CI
+      labels: ci
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: pwd
+      - run: ls -la
+      - name: build docker
+        id: build
+        run: |
+          printenv
