@@ -1,15 +1,17 @@
 name: dev build
 on:
-  # Scan changed files in PRs (diff-aware scanning):
   pull_request: {}
 jobs:
-  scan:
+  dev-build:
     if: github.actor!= 'dependabot-preview[bot]'
-    name: scan
+    name: build
     runs-on:
       group: CI
       labels: ci
     timeout-minutes: 5
+    env:
+      AWS_ACCOUNT: ${{ vars.AWS_ACCOUNT }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,3 +22,4 @@ jobs:
         id: build
         run: |
           printenv
+          apollo-ng
